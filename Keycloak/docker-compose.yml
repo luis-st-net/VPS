@@ -1,0 +1,73 @@
+services:
+  keycloak:
+    image: quay.io/keycloak/keycloak:latest
+    container_name: keycloak
+    environment:
+      KC_DB: "postgres"
+      KC_DB_URL: jdbc:postgresql://host.docker.internal:5432/${KC_DB_NAME}
+      KC_DB_USERNAME: ${KC_DB_USERNAME}
+      KC_DB_PASSWORD: ${KC_DB_PASSWORD}
+      KC_DB_SCHEMA: public
+      KC_DB_POOL_INITIAL_SIZE: 5
+      KC_DB_POOL_MAX_SIZE: 20
+      KC_DB_POOL_MIN_SIZE: 5
+      
+      KC_BOOTSTRAP_ADMIN_USERNAME: ${KC_BOOTSTRAP_ADMIN_USERNAME}
+      KC_BOOTSTRAP_ADMIN_PASSWORD: ${KC_BOOTSTRAP_ADMIN_PASSWORD}
+      
+      KC_HOSTNAME: ${KC_HOSTNAME}
+      KC_HOSTNAME_BACKCHANNEL_DYNAMIC: true
+      
+      KC_PROXY_HEADERS: "xforwarded"
+      
+      KC_HTTP_ENABLED: true
+      KC_HTTP_PORT: 3009
+      KC_HEALTH_ENABLED: true
+      KC_METRICS_ENABLED: false
+      
+      KC_CACHE: "ispn"
+
+      KC_FEATURES: "docker,client-secret-rotation"
+      
+      KC_LOG_LEVEL: "info,org.keycloak.http:debug"
+      KC_LOG_CONSOLE_OUTPUT: "json"
+      
+      KC_TRANSACTION_XA_ENABLED: false
+      
+      KC_SPI_THEME_STATIC_MAX_AGE: 2592000
+      KC_SPI_THEME_CACHE_THEMES: true
+      KC_SPI_THEME_CACHE_TEMPLATES: true
+      
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_SUCCESS_LEVEL: info
+      KC_SPI_EVENTS_LISTENER_JBOSS_LOGGING_ERROR_LEVEL: warn
+      
+      KC_SPI_BRUTE_FORCE_PROTECTED_PERMANENT_LOCKOUT: true
+      KC_SPI_BRUTE_FORCE_PROTECTED_MAX_FAILURE_WAIT_SECONDS: 900
+      KC_SPI_BRUTE_FORCE_PROTECTED_FAILURE_RESET_TIME_SECONDS: 43200
+      KC_SPI_BRUTE_FORCE_PROTECTED_MAX_DELTA_TIME_SECONDS: 43200
+      KC_SPI_BRUTE_FORCE_PROTECTED_MINIMUM_QUICK_LOGIN_WAIT_SECONDS: 60
+      KC_SPI_BRUTE_FORCE_PROTECTED_QUICK_LOGIN_CHECK_MILLI_SECONDS: 1000
+      KC_SPI_BRUTE_FORCE_PROTECTED_WAIT_INCREMENT_SECONDS: 60
+      
+      KC_HTTP_POOL_MAX_THREADS: 200
+      
+      JAVA_OPTS_APPEND: "-Xms512m -Xmx1024m -XX:MetaspaceSize=96M -XX:MaxMetaspaceSize=256m -Djava.net.preferIPv4Stack=true -Dfile.encoding=UTF-8"
+    volumes:
+      - keycloak-data:/opt/keycloak/data
+    ports:
+      - "3009:3009"
+    restart: unless-stopped
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    command:
+      - start
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  keycloak-data:
+
