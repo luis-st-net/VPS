@@ -1,0 +1,4 @@
+sudo ufw allow 139/tcp
+sudo ufw allow 445/tcp
+sudo ufw allow 137/udp
+sudo ufw allow 138/udp

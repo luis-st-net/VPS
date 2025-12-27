@@ -1,0 +1,15 @@
+services:
+  artifactory:
+    image: releases-docker.jfrog.io/jfrog/artifactory-oss:latest
+    container_name: artifactory
+    ports:
+      - "3001:8082"
+    volumes:
+      - artifactory-data:/var/opt/jfrog/artifactory
+    restart: unless-stopped
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  artifactory-data:

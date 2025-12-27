@@ -1,0 +1,8 @@
+# Place in volum (/var/lib/artifactory/)
+shared:
+  database:
+    driver: org.postgresql.Driver
+    type: postgresql
+    url: jdbc:postgresql://host.docker.internal:5432/artifactory
+    username: artifactory
+    password: <to_set>

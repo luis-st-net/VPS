@@ -1,0 +1,49 @@
+1. General setup
+Set new admin password
+Keep proxy settings empty
+Set custom base url to https://maven.luis-st.net
+Create default maven artifacts
+
+2. General settings
+Set server name to Maven Artifactory
+
+3. User security settings
+Enable anonymous access
+Set password encryption policy to required
+Enable google multi-factor authentication
+
+3. Artifactory settings
+Add environment test
+Create local maven2 repository forge
+Create local maven2 repository libraries
+Set environment of default maven repositories (local, remote and virtual) to test
+Set environment of new repositories (forge and libraries) to prod
+
+4. User groups
+Delete default groups
+Create group Admin, add administer platform role and add admin to this group
+Create group Developer
+Create group Permission manager and add manage resources role
+Create group Read only and set option auto join new users
+Create group Write only
+
+5. User permissions
+Delete default permissions
+Create permission Develop, add repositories forge and libraries, add group Developer and select read, annotate, deploy and delete
+Create permission Manage, add repositories forge and libraries, add group Permission manager and select manage
+Create permission Read, add repositories forge and libraries, add group Read only and select read
+Create permission Write, add repositories forge and libraries, add group Write only and select annotate and deploy
+
+6. Users
+Set mail of admin to luis@staudt-fridingen.de
+Enable login page as start page for anonymous users
+Add anonymous user to read only group
+Create none admin user for default usage (name: luis, mail: luis@staudt-fridingen.de, password: from keepass, groups: read only, write only and developer)
+Logout and login with admin to enable 2FFA
+Login with none admin user
+Create authentication token for none admin user
+
+7. Nginx
+Add shorthand urls for the repositories forge and libraries to acces them via https://<url>/(forge|libraries)
+
+8. Upload existing maven artifacts 

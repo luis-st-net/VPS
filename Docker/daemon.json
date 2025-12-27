@@ -1,0 +1,4 @@
+// Place file in /etc/docker/daemon.json
+{
+    "bip": "10.4.0.1/24"
+}

@@ -1,0 +1,19 @@
+# Server
+IP address: <Public IPv4>
+Do you want to enable IPv6 support (NAT)? n
+What port do you want OpenVPN to listen to? 2 (443)
+What protocol do you want OpenVPN to use? 2 (TCP)
+What DNS resolvers do you want to use with the VPN? 1 (Current system resolvers)
+Do you want to use compression? n
+Customize encryption settings? y
+Choose which cipher you want to use for the data channel: 1 (AES-128-GCM)
+Choose what kind of certificate you want to use: 1 (ECDSA)
+Choose which curve you want to use for the certificate's key: 1 (prime256v1)
+Choose which cipher you want to use for the control channel: 1 (ECDHE-ECDSA-AES-128-GCM-SHA256)
+Choose what kind of Diffie-Hellman key you want to use: 2 (DH)
+Choose what size of Diffie-Hellman key you want to use: 4 (4096 bits)
+Which digest algorithm do you want to use for HMAC? 1 (SHA-256)
+Which additional layer of security do you want to use? 1 (tls-crypt)
+
+# Client
+Do you want to protect the configuration file with a password? 2 (password)

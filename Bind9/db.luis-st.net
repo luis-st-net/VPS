@@ -1,0 +1,31 @@
+;
+; BIND data file for local loopback interface
+;
+$TTL    604800
+@       IN      SOA     localhost. admin.luis-st.net. (
+                              1         ; Serial
+                         604800         ; Refresh
+                          86400         ; Retry
+                        2419200         ; Expire
+                         604800 )       ; Negative Cache TTL
+;
+@       IN      NS      localhost.
+@       IN      A       10.0.0.3
+www     IN      A       10.0.0.3
+static  IN      A       10.0.0.3
+quiz     IN      A       10.0.0.3
+maven   IN      A       10.0.0.3
+docker  IN      A       10.0.0.3
+api     IN      A       10.0.0.3
+docs    IN      A       10.0.0.3
+vpn     IN      A       10.0.0.2
+db      IN      A       10.0.0.3
+database        IN      A       10.0.0.3
+wireguard       IN      A       10.0.0.3
+workflow       IN      A       10.0.0.3
+bitwarden       IN      NS      ns1.cloudflare.com.
+bitwarden       IN      NS      ns2.cloudflare.com.
+smtp    IN      A       10.0.0.4
+autodiscover    IN      A       10.0.0.4
+@       IN      MX      10      smtp.luis-st.net.
+

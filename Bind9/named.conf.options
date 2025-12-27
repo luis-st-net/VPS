@@ -1,0 +1,18 @@
+options {
+	directory "/var/cache/bind";
+	
+	recursion yes;
+	listen-on { 10.0.0.3; };
+	allow-transfer { none; };
+	allow-query { any; };	
+	allow-query-cache { any; };
+		
+	forwarders {
+		185.12.64.1;
+		185.12.64.2;
+	};
+	
+	dnssec-validation auto;
+	
+	//listen-on-v6 { any; };
+};

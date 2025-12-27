@@ -1,0 +1,16 @@
+[Unit]
+Description=Route to Docker Containe network
+After=network.target
+StartLimitIntervalSec=0
+
+[Service]
+Type=oneshot
+ExecStart=/sbin/ip route add 10.4.0.0/24 via 10.0.0.1
+ExecStop=/sbin/ip route del 10.4.0.0/24 via 10.0.0.1
+RemainAfterExit=yes
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target
+

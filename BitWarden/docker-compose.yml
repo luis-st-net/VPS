@@ -1,0 +1,32 @@
+services:
+  bitwarden:
+    image: ghcr.io/bitwarden/lite
+    container_name: bitwarden
+    environment:
+      BW_DOMAIN: ${BW_DOMAIN}
+      BW_DB_PROVIDER: ${BW_DB_PROVIDER}
+      BW_DB_SERVER: ${BW_DB_SERVER}
+      BW_DB_DATABASE: ${BW_DB_DATABASE}
+      BW_DB_USERNAME: ${BW_DB_USERNAME}
+      BW_DB_PASSWORD: ${BW_DB_PASSWORD}
+      BW_INSTALLATION_ID: ${BW_INSTALLATION_ID}
+      BW_INSTALLATION_KEY: ${BW_INSTALLATION_KEY}
+      globalSettings__mail__replyToEmail: ${BW_MAIL_EMAIL}
+      globalSettings__mail__smtp__host: ${BW_MAIL_HOST}
+      globalSettings__mail__smtp__port: ${BW_MAIL_PORT}
+      globalSettings__mail__smtp__ssl: ${BW_MAIL_SSL}
+      globalSettings__mail__smtp__username: ${BW_MAIL_USERNAME}
+      globalSettings__mail__smtp__password: ${BW_MAIL_PASSWORD}
+      globalSettings__disableUserRegistration: ${BW_DISABLE_USER_REGISTRATION}
+      adminSettings__admins: ${BW_ADMINS}
+    volumes:
+      - bitwarden-data:/etc/bitwarden
+    ports:
+      - "3005:8080"
+    restart: unless-stopped
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+
+volumes:
+  bitwarden-data:

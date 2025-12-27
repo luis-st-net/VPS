@@ -1,0 +1,23 @@
+version: '3.8'
+
+services:
+  wg-easy:
+    image: ghcr.io/wg-easy/wg-easy
+    container_name: wg-easy
+    environment:
+      WG_HOST: ${WG_HOST}
+      WG_DEFAULT_ADDRESS: ${WG_DEFAULT_ADDRESS}
+      WG_DEFAULT_DNS: ${WG_DEFAULT_DNS}
+      WG_ALLOWED_IPS: ${WG_ALLOWED_IPS}
+      WG_PORT: ${WG_PORT}
+      PORT: ${PORT}
+      PASSWORD_HASH: ${PASSWORD_HASH}
+      WG_PERSISTENT_KEEPALIVE: ${WG_PERSISTENT_KEEPALIVE}
+      WG_MTU: ${WG_MTU}
+    volumes:
+      - /var/lib/wireguard:/etc/wireguard
+    cap_add:
+      - NET_ADMIN
+      - SYS_MODULE
+    restart: unless-stopped
+    network_mode: host
