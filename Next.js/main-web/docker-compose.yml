@@ -1,0 +1,37 @@
+services:
+  web:
+    image: main-web:latest
+    container_name: main-web
+    healthcheck:
+      test: ["CMD-SHELL", "node -e \"require('http').get('http://localhost:3000', (res) => process.exit(res.statusCode === 200 ? 0 : 1))\""]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
+    environment:
+      SECRET: ${SECRET}
+
+      CONTACT_SMTP_HOST: ${CONTACT_SMTP_HOST}
+      CONTACT_SMTP_PORT: 465
+      CONTACT_SMTP_SECURE: true
+      CONTACT_SMTP_USER: ${CONTACT_SMTP_USER}
+      CONTACT_SMTP_PASSWORD: ${CONTACT_SMTP_PASSWORD}
+
+      VERIFICATION_SMTP_HOST: ${VERIFICATION_SMTP_HOST}
+      VERIFICATION_SMTP_PORT: 465
+      VERIFICATION_SMTP_SECURE: true
+      VERIFICATION_SMTP_USER: ${VERIFICATION_SMTP_USER}
+      VERIFICATION_SMTP_PASSWORD: ${VERIFICATION_SMTP_PASSWORD}
+
+      WEBSITE_OWNER: "Luis Staudt"
+      OWNER_STREET: "Street redacted for privacy"
+      OWNER_CITY: "City redacted for privacy"
+      OWNER_COUNTRY: "Germany"
+      OWNER_MAIL: ${OWNER_MAIL}
+    ports:
+      - "3000:3000"
+    restart: unless-stopped
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+

@@ -23,6 +23,7 @@ db      IN      A       10.0.0.3
 database        IN      A       10.0.0.3
 wireguard       IN      A       10.0.0.3
 workflow       IN      A       10.0.0.3
+auth	IN      A       10.0.0.3
 bitwarden       IN      NS      ns1.cloudflare.com.
 bitwarden       IN      NS      ns2.cloudflare.com.
 smtp    IN      A       10.0.0.4
