@@ -4,8 +4,8 @@ server {
    
    server_name www.luis-st.net luis-st.net;
    
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;   
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;   
    
    location / {
       proxy_set_header Host $http_host;
@@ -19,8 +19,8 @@ server {
    
    server_name maven.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       proxy_set_header Host $http_host;
@@ -54,8 +54,8 @@ server {
    
    server_name docker.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       allow 10.2.0.0/16;
@@ -73,8 +73,8 @@ server {
    
    server_name api.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       allow 10.2.0.0/16;
@@ -99,8 +99,8 @@ server {
    
    server_name db.luis-st.net database.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       allow 10.2.0.0/16;
@@ -118,8 +118,8 @@ server {
 
    server_name bitwarden.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       proxy_set_header Host $http_host;
@@ -142,8 +142,8 @@ server {
 
    server_name quiz.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       proxy_set_header Host $http_host;
@@ -157,8 +157,8 @@ server {
 
    server_name wireguard.luis-st.net;
 
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
       allow 10.2.0.0/16;
@@ -176,8 +176,8 @@ server {
    
    server_name auth.luis-st.net;
    
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
    location /admin {
       allow 10.2.0.0/16;
@@ -215,8 +215,8 @@ server {
    
    server_name static.luis-st.net;
    
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
    root /home/web/static;
    
@@ -235,8 +235,8 @@ server {
    
    server_name docs.luis-st.net;
    
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
    root /home/web/docs/LUtils;
 }
@@ -246,8 +246,8 @@ server {
    listen [::]:443 ssl;
    server_name cookbook.luis-st.net;
    
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
   
    location /api/ {
        proxy_pass http://localhost:3031/;

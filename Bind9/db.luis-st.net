@@ -18,15 +18,14 @@ maven   IN      A       10.0.0.3
 docker  IN      A       10.0.0.3
 api     IN      A       10.0.0.3
 docs    IN      A       10.0.0.3
-vpn     IN      A       10.0.0.2
 db      IN      A       10.0.0.3
 database        IN      A       10.0.0.3
 wireguard       IN      A       10.0.0.3
-workflow       IN      A       10.0.0.3
-auth	IN      A       10.0.0.3
-bitwarden       IN      NS      ns1.cloudflare.com.
-bitwarden       IN      NS      ns2.cloudflare.com.
+workflow        IN      A       10.0.0.3
+auth    IN      A       10.0.0.3
+bitwarden       IN      A       10.0.0.3
+;bitwarden       IN      NS      ns1.cloudflare.com.
+;bitwarden       IN      NS      ns2.cloudflare.com.
 smtp    IN      A       10.0.0.4
 autodiscover    IN      A       10.0.0.4
 @       IN      MX      10      smtp.luis-st.net.
-
