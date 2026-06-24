@@ -1,0 +1,10 @@
+# Only needed on external servers needed where wireguard is not running
+# /etc/netplan/99-vpn-route.yaml
+
+network:
+  version: 2
+  ethernets:
+    enp7s0:
+      routes:
+        - to: 10.2.0.0/24
+          via: 10.0.0.1
