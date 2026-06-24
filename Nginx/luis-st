@@ -77,6 +77,10 @@ server {
    ssl_certificate_key /etc/nginx/ssl/privkey.pem;
 
    location / {
+      allow 10.2.0.0/16;
+      allow 10.8.0.0/16;
+      deny all;
+      
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
       proxy_set_header X-Nginx-Proxy true;
@@ -169,21 +173,6 @@ server {
 server {
    listen 443 ssl;
    listen [::]:443 ssl;
-
-   server_name workflow.luis-st.net;
-
-   ssl_certificate /etc/nginx/ssl/cert.pem;
-   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
-
-   location / {
-      proxy_set_header Host $http_host;
-      proxy_pass http://127.0.0.1:3008;
-   }
-}
-
-server {
-   listen 443 ssl;
-   listen [::]:443 ssl;
    
    server_name auth.luis-st.net;
    
@@ -213,10 +202,30 @@ server {
    }
    
    location / {
-      proxy_set_header Host $http_host;
+      proxy_set_header Host $host;
       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_pass http://127.0.0.1:3009;
+   }
+}
+
+server {
+   listen 443 ssl;
+   listen [::]:443 ssl;
+   
+   server_name static.luis-st.net;
+   
+   ssl_certificate /etc/nginx/ssl/cert.pem;
+   ssl_certificate_key /etc/nginx/ssl/privkey.pem;
+   
+   root /home/web/static;
+   
+   location = /hfu/gdp/substring {
+      try_files /hfu/gdp/substring.html =404;
+   }
+   
+   location / {
+      try_files $uri $uri/ =404;
    }
 }
 
@@ -235,29 +244,37 @@ server {
 server {
    listen 443 ssl;
    listen [::]:443 ssl;
-
-   server_name static.luis-st.net;
-
+   server_name cookbook.luis-st.net;
+   
    ssl_certificate /etc/nginx/ssl/cert.pem;
    ssl_certificate_key /etc/nginx/ssl/privkey.pem;
-
-   root /home/web/static;
+  
+   location /api/ {
+       proxy_pass http://localhost:3031/;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+   }
    
-   location = /hfu/gdp/substring {
-      try_files /hfu/gdp/substring.html =404;
+   location /images/ {
+       proxy_pass http://localhost:3031/images/;
+       proxy_set_header Host $host;
    }
    
    location / {
-      try_files $uri $uri/ =404;
+       proxy_pass http://localhost:3030/;
+       proxy_set_header Host $host;
+       proxy_set_header X-Real-IP $remote_addr;
+       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
    }
 }
 
-#server {
-#   listen 80;
-#   listen [::]:80;
-#   
-#   server_name _;
-#   
-#   return 301 https://$host$request_uri;
-#}
+server {
+   listen 80;
+   listen [::]:80;
+   
+   server_name _;
+   
+   return 301 https://$host$request_uri;
+}
 
