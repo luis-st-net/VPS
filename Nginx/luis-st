@@ -58,8 +58,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -77,8 +77,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -103,8 +103,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -127,8 +127,8 @@ server {
    }
    
    location /admin {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -161,8 +161,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location / {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -180,7 +180,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
 
    location /admin {
-      allow 10.2.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
 
       error_page 403 = @admin_denied;
@@ -225,8 +226,8 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
    location /admin {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
@@ -236,8 +237,8 @@ server {
    }
    
    location /realms/master {
-      allow 10.2.0.0/16;
-      allow 10.8.0.0/16;
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
       deny all;
       
       proxy_set_header Host $http_host;
