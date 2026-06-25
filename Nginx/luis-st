@@ -9,6 +9,9 @@ server {
    
    location / {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3000;
    }
 }
@@ -24,26 +27,41 @@ server {
 
    location / {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3001;
    }
 
    location /forge {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3001/artifactory/forge;
    }   
 
    location /forge-old {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3001/artifactory/forge-old;
    }
 
    location /libraries {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3001/artifactory/libraries;
    }
    
    location /plugins {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3001/artifactory/plugins;
    }
 }
@@ -63,6 +81,9 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass https://127.0.0.1:3002;
    }
 }
@@ -87,7 +108,7 @@ server {
       proxy_set_header X-Forwarded-Proto $scheme;
       proxy_set_header X-Forwarded-Server $host;
       proxy_set_header X-Forwarded-Port $server_port;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $remote_addr;
       
       proxy_pass http://127.0.0.1:3003;
    }
@@ -108,6 +129,9 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3004;
    }
 }
@@ -123,6 +147,9 @@ server {
 
    location / {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3005;
    }
    
@@ -132,6 +159,9 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3005/admin;
    }
 }
@@ -147,6 +177,9 @@ server {
 
    location / {
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3006;
    }
 }
@@ -166,6 +199,9 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      
       proxy_pass http://127.0.0.1:3007;
    }
 }
@@ -188,8 +224,9 @@ server {
 
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3008;
    }
 
@@ -202,16 +239,18 @@ server {
       
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3008;
    }
 
    location / {
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3008;
    }
 }
@@ -231,8 +270,10 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3009;
    }
    
@@ -242,15 +283,19 @@ server {
       deny all;
       
       proxy_set_header Host $http_host;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3009;
    }
    
    location / {
       proxy_set_header Host $host;
-      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
       proxy_set_header X-Forwarded-Proto $scheme;
+      
       proxy_pass http://127.0.0.1:3009;
    }
 }
