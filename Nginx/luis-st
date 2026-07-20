@@ -24,7 +24,9 @@ server {
 
    ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
-
+   
+   client_max_body_size 0;
+   
    location / {
       proxy_set_header Host $http_host;
       proxy_set_header X-Real-IP $remote_addr;
@@ -330,34 +332,6 @@ server {
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
    root /home/web/docs/LUtils;
-}
-
-server {
-   listen 443 ssl;
-   listen [::]:443 ssl;
-   server_name cookbook.luis-st.net;
-   
-   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
-   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
-  
-   location /api/ {
-       proxy_pass http://localhost:3031/;
-       proxy_set_header Host $host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   }
-   
-   location /images/ {
-       proxy_pass http://localhost:3031/images/;
-       proxy_set_header Host $host;
-   }
-   
-   location / {
-       proxy_pass http://localhost:3030/;
-       proxy_set_header Host $host;
-       proxy_set_header X-Real-IP $remote_addr;
-       proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
-   }
 }
 
 server {
