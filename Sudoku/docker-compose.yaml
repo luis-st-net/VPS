@@ -1,0 +1,32 @@
+services:
+  sudoku:
+    image: sudoku-server:latest
+    restart: unless-stopped
+    environment:
+      SUDOKU_DB_URL: jdbc:postgresql://host.docker.internal:5432/sudoku
+      SUDOKU_DB_USER: sudoku
+      SUDOKU_DB_PASSWORD: ${SUDOKU_DB_PASSWORD}
+      
+      SUDOKU_BOOTSTRAP_INVITE: 45w3h3gg
+      
+      SUDOKU_SMTP_HOST: smtp.luis-st.net
+      SUDOKU_SMTP_PORT: 465
+      SUDOKU_SMTP_SECURITY: IMPLICIT_TLS
+      SUDOKU_SMTP_USERNAME: sudoku@luis-st.net
+      SUDOKU_SMTP_PASSWORD: ${SUDOKU_SMTP_PASSWORD}
+      SUDOKU_SMTP_FROM: sudoku@luis-st.net
+      
+      SUDOKU_TIMEZONE: Europe/Berlin
+      SUDOKU_DAILY_SIZE: 9
+      SUDOKU_SERVER_NAME: "Barbaras Rabarberbar"
+      SUDOKU_TRUST_PROXY: true
+    ports:
+      - "3010:7000"
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    healthcheck:
+      test: [ "CMD-SHELL", "wget -qO- http://localhost:7000/health || exit 1" ]
+      interval: 30s
+      timeout: 5s
+      retries: 3
+      start_period: 30s
