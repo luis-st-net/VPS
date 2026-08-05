@@ -26,6 +26,7 @@ auth	IN	A	10.0.0.3
 bitwarden	IN	A	10.0.0.3
 ur	IN	A	10.0.0.3
 unserious-research	IN	A	10.0.0.3
+sudoku	IN	A	10.0.0.3
 smtp    IN      A       10.0.0.4
 autodiscover    IN      A       10.0.0.4
 @       IN      MX      10      smtp.luis-st.net.

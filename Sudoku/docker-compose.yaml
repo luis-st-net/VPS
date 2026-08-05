@@ -1,7 +1,6 @@
 services:
   sudoku:
     image: sudoku-server:latest
-    restart: unless-stopped
     environment:
       SUDOKU_DB_URL: jdbc:postgresql://host.docker.internal:5432/sudoku
       SUDOKU_DB_USER: sudoku
@@ -22,6 +21,8 @@ services:
       SUDOKU_TRUST_PROXY: true
     ports:
       - "3010:7000"
+    restart: unless-stopped
+    network_mode: bridge
     extra_hosts:
       - "host.docker.internal:host-gateway"
     healthcheck:
@@ -30,3 +31,4 @@ services:
       timeout: 5s
       retries: 3
       start_period: 30s
+
