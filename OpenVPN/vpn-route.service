@@ -1,3 +1,5 @@
+# If ever needed again, replace with netplan
+
 [Unit]
 Description=Route to OpenVPN network
 After=network.target
