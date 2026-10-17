@@ -1,0 +1,99 @@
+server {
+   listen 443 ssl;
+   listen [::]:443 ssl;
+
+   server_name jellyfin.luis-st.net;
+
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
+
+   client_max_body_size 20M;
+
+   location / {
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
+      deny all;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Host $host;
+
+      proxy_buffering off;
+
+      proxy_pass http://10.2.0.11:8899;
+   }
+}
+
+server {
+   listen 443 ssl;
+   listen [::]:443 ssl;
+
+   server_name nas.luis-st.net;
+
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
+
+   client_max_body_size 0;
+
+   location / {
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
+      deny all;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      proxy_ssl_verify off;
+
+      proxy_pass https://10.2.0.11:9443;
+   }
+}
+
+server {
+   listen 443 ssl;
+   listen [::]:443 ssl;
+
+   server_name immich.luis-st.net;
+
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
+
+   client_max_body_size 50000M;
+
+   location / {
+      allow 10.2.0.0/24;
+      allow 10.8.0.0/24;
+      deny all;
+
+      proxy_http_version 1.1;
+      proxy_set_header Upgrade $http_upgrade;
+      proxy_set_header Connection "upgrade";
+
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $remote_addr;
+      proxy_set_header X-Forwarded-Proto $scheme;
+
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+      send_timeout 600s;
+
+      proxy_request_buffering off;
+      proxy_buffering off;
+
+      proxy_pass http://10.2.0.11:2283;
+   }
+}
+

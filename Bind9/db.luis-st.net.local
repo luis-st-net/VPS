@@ -1,0 +1,7 @@
+;
+; Local (home NAS) services via WireGuard — included from db.luis-st.net
+; nginx on web-server (10.0.0.3) proxies to the NAS at 10.2.0.11
+;
+jellyfin        IN      A       10.0.0.3
+nas             IN      A       10.0.0.3
+immich          IN      A       10.0.0.3
