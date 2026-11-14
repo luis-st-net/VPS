@@ -20,51 +20,64 @@ server {
    listen 443 ssl;
    listen [::]:443 ssl;
    
+   server_name artifact.luis-st.net;
+
+   ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
+   ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
+   
+   # The server limits uploads itself (ARTIFACTORY_MAX_UPLOAD_SIZE_MB)
+   client_max_body_size 0;
+   
+   location / {
+      proxy_http_version 1.1;
+      
+      proxy_set_header Host $http_host;
+      proxy_set_header X-Real-IP $remote_addr;
+      proxy_set_header X-Forwarded-For $proxy_add_x_forwarded_for;
+      proxy_set_header X-Forwarded-Proto $scheme;
+      proxy_set_header X-Forwarded-Host $host;
+      
+      # Stream artifacts instead of buffering them on disk
+      proxy_request_buffering off;
+      proxy_buffering off;
+      
+      proxy_read_timeout 600s;
+      proxy_send_timeout 600s;
+      
+      proxy_pass http://127.0.0.1:3011;
+   }
+}
+
+# Old JFrog Artifactory, all urls redirect to the new artifactory
+# GET and HEAD use 301 (understood by every Maven/Gradle version), other methods 308 so uploads keep their method
+server {
+   listen 443 ssl;
+   listen [::]:443 ssl;
+   
    server_name maven.luis-st.net;
 
    ssl_certificate /etc/nginx/ssl/luis-st.net.cer;
    ssl_certificate_key /etc/nginx/ssl/luis-st.net.key;
    
-   client_max_body_size 0;
+   # Shorthand urls https://maven.luis-st.net/<repo>/...
+   location ~ ^/(?<repo>forge|forge-old|libraries|plugins)(?<rest>/.*)?$ {
+      if ($request_method !~ ^(GET|HEAD)$) {
+         return 308 https://artifact.luis-st.net/maven/$repo$rest$is_args$args;
+      }
+      return 301 https://artifact.luis-st.net/maven/$repo$rest$is_args$args;
+   }
    
+   # Full urls https://maven.luis-st.net/artifactory/<repo>/...
+   location ~ ^/artifactory/(?!api/|webapp|ui/)(?<repo>[^/]+)(?<rest>/.*)?$ {
+      if ($request_method !~ ^(GET|HEAD)$) {
+         return 308 https://artifact.luis-st.net/maven/$repo$rest$is_args$args;
+      }
+      return 301 https://artifact.luis-st.net/maven/$repo$rest$is_args$args;
+   }
+   
+   # Web ui, api and everything else
    location / {
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      
-      proxy_pass http://127.0.0.1:3001;
-   }
-
-   location /forge {
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      
-      proxy_pass http://127.0.0.1:3001/artifactory/forge;
-   }   
-
-   location /forge-old {
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      
-      proxy_pass http://127.0.0.1:3001/artifactory/forge-old;
-   }
-
-   location /libraries {
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      
-      proxy_pass http://127.0.0.1:3001/artifactory/libraries;
-   }
-   
-   location /plugins {
-      proxy_set_header Host $http_host;
-      proxy_set_header X-Real-IP $remote_addr;
-      proxy_set_header X-Forwarded-For $remote_addr;
-      
-      proxy_pass http://127.0.0.1:3001/artifactory/plugins;
+      return 301 https://artifact.luis-st.net/;
    }
 }
 

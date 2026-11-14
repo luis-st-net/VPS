@@ -1,0 +1,38 @@
+services:
+  lartifactory:
+    image: lartifactory:1.0.0
+    container_name: lartifactory
+    environment:
+      ARTIFACTORY_PORT: 8080
+      ARTIFACTORY_BASE_URL: https://artifact.luis-st.net
+      ARTIFACTORY_TRUST_PROXY: true
+      ARTIFACTORY_ENABLE_API_DOCS: false
+      ARTIFACTORY_STORAGE_PATH: /data
+      ARTIFACTORY_MAX_UPLOAD_SIZE_MB: 1024
+
+      ARTIFACTORY_DB_URL: jdbc:postgresql://host.docker.internal:5432/lartifactory
+      ARTIFACTORY_DB_USERNAME: lartifactory
+      ARTIFACTORY_DB_PASSWORD: ${ARTIFACTORY_DB_PASSWORD}
+      ARTIFACTORY_DB_POOL_SIZE: 10
+
+      ARTIFACTORY_ADMIN_USERNAME: admin
+      ARTIFACTORY_ADMIN_PASSWORD: ${ARTIFACTORY_ADMIN_PASSWORD}
+
+      JAVA_TOOL_OPTIONS: "-XX:MaxRAMPercentage=75.0 -XX:+ExitOnOutOfMemoryError"
+    ports:
+      - "3011:8080"
+    volumes:
+      - lartifactory-data:/data
+    mem_limit: 1g
+    restart: unless-stopped
+    network_mode: bridge
+    extra_hosts:
+      - "host.docker.internal:host-gateway"
+    logging:
+      driver: "json-file"
+      options:
+        max-size: "10m"
+        max-file: "3"
+
+volumes:
+  lartifactory-data:

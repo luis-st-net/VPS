@@ -15,6 +15,7 @@ www     IN      A       10.0.0.3
 static	IN	A	10.0.0.3
 quiz     IN      A       10.0.0.3
 maven   IN      A       10.0.0.3
+artifact        IN      A       10.0.0.3
 docker  IN      A       10.0.0.3
 api     IN      A       10.0.0.3
 docs    IN      A       10.0.0.3
